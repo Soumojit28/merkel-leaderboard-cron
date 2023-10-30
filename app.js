@@ -116,11 +116,18 @@ const main = async () => {
   console.log(walletPoints);
   for (let j in walletPoints) {
     try {
-      const user = new User({
-        userAddress: j,
-        points: walletPoints[j]
+      // const user = new User({
+      //   userAddress: j,
+      //   points: walletPoints[j]
+      // });
+      // await user.save();
+      //do upsert
+      const filter = { userAddress: j };
+      const update = { points: walletPoints[j] };
+      await User.findOneAndUpdate(filter, update, {
+        new: true,
+        upsert: true // Make this update into an upsert
       });
-      await user.save();
     } catch (e) {
       console.log(e);
     }
