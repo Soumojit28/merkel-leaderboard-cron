@@ -8,6 +8,10 @@ const userSchema = new mongoose.Schema({
   points: {
     type: Number,
     required: true
+  },
+  rank: {
+    type: Number,
+    default: 0
   }
 });
 

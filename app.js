@@ -132,6 +132,23 @@ const main = async () => {
       console.log(e);
     }
   }
+  //calculate ranks based on the points and update in database
+  const allUsersData = await User.find().sort({ points: -1 });
+  console.log(allUsersData);
+  let rank = 1;
+  let prevPoints = 0;
+  for (let user of allUsersData) {
+    if (user.points === prevPoints) {
+      user.rank = rank;
+    } else {
+      user.rank = rank;
+      rank++;
+    }
+    prevPoints = user.points;
+    await user.save();
+  }
+  
+
   console.log("Done");
   //exit
   process.exit();
